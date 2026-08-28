@@ -1,0 +1,16 @@
+{
+  // Bind the Kubernetes API schema to every manifest in this repo.
+  // Without this, yaml-language-server has no schema for files like
+  // 02/pod.yaml and offers zero completions.
+  "yaml.schemas": {
+    "kubernetes": ["**/*.yaml", "**/*.yml"]
+  },
+
+  // Pin the API version the schema is generated from. Omit to let the
+  // extension use its bundled default (v1.34.1 in redhat.vscode-yaml 1.24.0).
+  // "yaml.kubernetesVersion": "v1.31.0",
+
+  "yaml.schemaStore.enable": true,
+  "yaml.completion": true,
+  "yaml.validate": true
+}

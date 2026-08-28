@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    nginx-deployment: "true"
+spec:
+  replicas: 6
+  selector:
+    matchLabels:
+      nginx-pod: "true"
+  template:
+    metadata:
+      name: nginx-pod
+      labels:
+        nginx-pod: "true"
+    spec:
+      containers:
+        - image: nginx:1.26-alpine
+          name: nginx
+          ports:
+            - containerPort: 80
+          resources:
+            
