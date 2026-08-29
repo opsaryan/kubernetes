@@ -1,13 +1,20 @@
 {
-  // Bind the Kubernetes API schema to every manifest in this repo.
-  // Without this, yaml-language-server has no schema for files like
-  // 02/pod.yaml and offers zero completions.
+  // Bind the Kubernetes API schema to manifests in this repo.
+  // Files that are NOT Kubernetes API objects (kind cluster configs)
+  // override this with a `# yaml-language-server: $schema=...` modeline
+  // on line 1 — a modeline short-circuits this mapping entirely.
   "yaml.schemas": {
     "kubernetes": ["**/*.yaml", "**/*.yml"]
   },
 
-  // Pin the API version the schema is generated from. Omit to let the
-  // extension use its bundled default (v1.34.1 in redhat.vscode-yaml 1.24.0).
+  // The CRD catalog lookup fires for any apiVersion whose group is not a
+  // core Kubernetes group, then reports "Unable to load schema" when the
+  // datreeio catalog 404s. Nothing here uses CRDs, so turn it off.
+  // Re-enable if you install operators (cert-manager, ArgoCD, etc).
+  "yaml.kubernetesCRDStore.enable": false,
+
+  // Pin the API version the schema is generated from. Omit to use the
+  // extension's bundled default (v1.34.1 in redhat.vscode-yaml 1.24.0).
   // "yaml.kubernetesVersion": "v1.31.0",
 
   "yaml.schemaStore.enable": true,

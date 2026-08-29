@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-dpt
+  labels:
+    type: nginx-dpt
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      type: nginx-pod
+  template:
+    metadata:
+      name: nginx 
+      labels:
+        type: nginx-pod
+    spec:
+      containers:
+        - name: nginx 
+          image: nginx:latest
+          ports:
+            - containerPort: 80
