@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: multi-container
+  labels:
+    type: multi-container
+spec:
+  selector:
+    matchLabels:
+      type: nginx-multi-container
+  template:
+    metadata:
+      name: nginx-multi-container
+      labels:
+        type: nginx-multi-container
+    spec:
+      containers:
+        - name: nginx-m 
+          image: nginx:latest
+          ports:
+            - containerPort: 80
+      initContainers:
+        - name: busybox-m
+          image: busybox:latest
+          command: ['sh', '-c', 'sleep 2s']
+        - name: busybox-n
+          image: busybox:latest
+          command: ['sh', '-c', 'sleep 2s']
