@@ -1,0 +1,25 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: test-cron
+  labels:
+    type: test-cron
+spec:
+  jobTemplate:
+    metadata:
+      name: cron-job-1
+      labels:
+        type: cron-job-1
+    spec:
+      template:
+        metadata:
+          name: bb 
+          labels:
+            type: bb 
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: busybox
+              image: busybox:latest
+              command: ["echo", "Hello, World!!"]
+  schedule: "*/5 * * * *"
