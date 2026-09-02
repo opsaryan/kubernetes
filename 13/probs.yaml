@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy-prob
+  labels:
+    type: prod-deployment
+spec:
+  selector:
+    matchLabels:
+      type: busybox-probed
+  template:
+    metadata:
+      name: busybox-probed
+      labels:
+        type: busybox-probed
+    spec:
+      containers:
+        - name: busybox
+          image: busybox
+          command: ["sh", "-c", "touch /tmp/healthy; sleep 60; rm -f /tmp/healthy; sleep 600"]
+          resources:
+            requests:
+              cpu: 50m
+              memory: 70Mi
+            limits:
+              cpu: 70m
+              memory: 90Mi
+          livenessProbe:
+            initialDelaySeconds: 7
+            failureThreshold: 5
+            periodSeconds: 2
+            exec: 
+              command: ["cat", "/tmp/healthy"]
+          readinessProbe:
+            initialDelaySeconds: 7
+            failureThreshold: 5
+            periodSeconds: 2
+            exec:
+              command: ["cat", "/tmp/healthy"]
