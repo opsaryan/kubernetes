@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tcp-prob
+  labels:
+    type: tcp-prob
+spec:
+  selector:
+    matchLabels:
+      type: tcp-prob-dep
+  template:
+    metadata:
+      name: tcp-prob-dep
+      labels:
+        type: tcp-prob-dep
+    spec:
+      containers:
+        - name: busybox
+          image: registry.k8s.io/goproxy:0.1
+          resources:
+            requests:
+              cpu: 50m
+              memory: 70Mi
+            limits:
+              cpu: 70m
+              memory: 90Mi
+          readinessProbe:
+            initialDelaySeconds: 5
+            failureThreshold: 3
+            periodSeconds: 5
+            tcpSocket:
+              port: 8080
+          livenessProbe:
+            initialDelaySeconds: 5
+            failureThreshold: 3
+            periodSeconds: 5
+            tcpSocket:
+              port: 8080
