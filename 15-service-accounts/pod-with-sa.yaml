@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: busybox
+  name: busybox
+spec:
+  containers:
+  - image: busybox
+    name: busybox
+    resources: {}
+    command: ["sh", "-c"]
+    args: ["echo 'Hello World' && sleep 5000"]
+  serviceAccountName: get-pods-sa
+status: {}

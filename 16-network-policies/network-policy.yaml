@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: db-netpol
+  labels:
+    type: db-netpol
+spec:
+  podSelector:
+    matchLabels:
+      type: db
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              type: backend
+      ports:
+        - port: 27017

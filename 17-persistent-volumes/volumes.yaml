@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-volume
+  labels:
+    type: nginx-volume
+spec:
+  containers:
+    - name: nginx-1
+      image: nginx
+      resources: {}
+      volumeMounts:
+        - mountPath: /etc/shared
+          name: nginx-shared
+      command:
+        - sh
+      args:
+        - -c 
+        - "echo 'Hello from nginx 1' > /etc/shared/from-nginx-1 && sleep 100"
+    - name: nginx-2
+      image: nginx
+      resources: {}
+      volumeMounts:
+        - mountPath: /etc/shared
+          name: nginx-shared
+      command:
+      - sh
+      args:
+        - -c
+        - "sleep 3 && cat /etc/shared/from-nginx-1 && sleep 100"
+  volumes:
+    - name: nginx-shared
+      emptyDir: {}
