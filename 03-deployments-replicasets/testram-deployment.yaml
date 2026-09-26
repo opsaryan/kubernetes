@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: synergychat-testram
+  name: synergychat-testram
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: synergychat-testram
+  template:
+    metadata:
+      labels:
+        app: synergychat-testram
+    spec:
+      containers:
+        - image: bootdotdev/synergychat-testram:latest
+          name: synergychat-testram
+          resources:
+            requests:
+              memory: 40000Mi
+            limits:
+              memory: 40000Mi
+          env:
+            - name: MEGABYTES
+              valueFrom:
+                configMapKeyRef:
+                  key: MEGABYTES
+                  name: synergychat-testram-configmap
